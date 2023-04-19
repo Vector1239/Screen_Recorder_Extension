@@ -4,7 +4,7 @@ let mediaRecorder;
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === 'startRecording') {
     console.log('start_Recording');
-    // console.log(message.ci);
+
     navigator.mediaDevices.getUserMedia({
       audio: false,//{
       //   mandatory: {

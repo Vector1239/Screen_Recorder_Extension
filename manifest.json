@@ -9,9 +9,7 @@
     "tabCapture",
     "tabs",
     "videoCapture",
-    "audioCapture",
-    "desktopCapture",
-    "scripting"
+    "audioCapture"
   ],
   "action": {
     "default_popup": "popup.html"
