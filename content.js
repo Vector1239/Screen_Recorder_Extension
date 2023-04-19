@@ -3,9 +3,23 @@ let mediaRecorder;
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === 'startRecording') {
-    console.log("start_Recording");
-    navigator.mediaDevices.getDisplayMedia({ video: true, audio: true })
-    .then(stream => {
+    console.log('start_Recording');
+    // console.log(message.ci);
+    navigator.mediaDevices.getUserMedia({
+      audio: false,//{
+      //   mandatory: {
+      //     chromeMediaSource: 'tab',
+      //     chromeMediaSourceId: message.streamId
+      //   }
+      // },
+      video: {
+        mandatory: {
+          chromeMediaSource: 'tab',
+          chromeMediaSourceId: message.streamId
+        }
+      }
+    })  
+    .then((stream) => {
       mediaRecorder = new MediaRecorder(stream);
       mediaRecorder.ondataavailable = event => {
         chunks.push(event.data);
@@ -18,13 +32,13 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         a.download = 'recorded-video.webm';
         a.click();
         chunks = [];
+        stream.getTracks().forEach(track => track.stop());
       };
       mediaRecorder.start();
     });
   } else if (message.action === 'stopRecording') {
-    console.log("stop_Recording");
+    console.log('stop_Recording');
     mediaRecorder.stop();
   }
 });
-
 
