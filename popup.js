@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', function() {
   let isCapturing=false;
   let tabId;
 
-
   startButton.addEventListener('click', function() {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       tabId = tabs[0].id;
